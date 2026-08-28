@@ -469,9 +469,17 @@ public class SmartKeyRemappingPlugin extends Plugin implements KeyListener
 		return KeyEvent.VK_UNDEFINED;
 	}
 
+	private boolean isChatboxMinimized()
+	{
+		Widget chatbox = client.getWidget(InterfaceID.Chatbox.CHATAREA);
+		return chatbox == null || chatbox.isSelfHidden();
+	}
+
 	boolean isChatInputAvailable()
 	{
-		return chatboxFocused() && !isDialogOpen();
+		return chatboxFocused()
+				&& !isDialogOpen()
+				&& !isChatboxMinimized();
 	}
 
 	private boolean chatboxFocused()
