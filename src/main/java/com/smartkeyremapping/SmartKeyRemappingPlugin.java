@@ -91,19 +91,22 @@ public class SmartKeyRemappingPlugin extends Plugin implements KeyListener
 		@Override
 		public MouseEvent mousePressed(MouseEvent e)
 		{
-			if (SwingUtilities.isLeftMouseButton(e) && !client.isMenuOpen() && isChatInputAvailable())
+			if (SwingUtilities.isLeftMouseButton(e) && !client.isMenuOpen())
 			{
 				net.runelite.api.Point canvasPoint = client.getMouseCanvasPosition();
 				if (canvasPoint != null)
 				{
 					Point pt = new Point(canvasPoint.getX(), canvasPoint.getY());
-					Rectangle inputArea = getInputAreaBounds();
 
-					if (!isTyping && config.clickToFocus() && inputArea != null && inputArea.contains(pt))
+					if (!isTyping && config.clickToFocus() && isChatInputAvailable())
 					{
-						startTyping();
-						e.consume();
-						return e;
+						Rectangle inputArea = getInputAreaBounds();
+						if (inputArea != null && inputArea.contains(pt))
+						{
+							startTyping();
+							e.consume();
+							return e;
+						}
 					}
 
 					if (isTyping)
@@ -197,6 +200,11 @@ public class SmartKeyRemappingPlugin extends Plugin implements KeyListener
 	@Subscribe
 	public void onPostClientTick(PostClientTick event)
 	{
+		if (isTyping && isChatboxMinimized())
+		{
+			stopTyping(!config.preserveChatInput());
+		}
+
 		if (!isTyping
 				&& client.getGameState() == GameState.LOGGED_IN
 				&& (chatboxFocused() || isBankPinOpen()))
@@ -344,7 +352,7 @@ public class SmartKeyRemappingPlugin extends Plugin implements KeyListener
 			return;
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_ENTER && !isDialogOpen())
+		if (e.getKeyCode() == KeyEvent.VK_ENTER && !isDialogOpen() && !isChatboxMinimized())
 		{
 			startTyping();
 			e.consume();
@@ -584,7 +592,7 @@ public class SmartKeyRemappingPlugin extends Plugin implements KeyListener
 			}
 		}
 
-		if (chatBounds == null && chatInput != null && chatInput.getCanvasLocation() != null)
+		if (chatBounds == null && chatInput != null && !chatInput.isSelfHidden() && chatInput.getCanvasLocation() != null)
 		{
 			net.runelite.api.Point inputLoc = chatInput.getCanvasLocation();
 			chatBounds = new Rectangle(
@@ -595,7 +603,7 @@ public class SmartKeyRemappingPlugin extends Plugin implements KeyListener
 			);
 		}
 
-		if (chatBounds != null && !chatBounds.contains(mousePoint))
+		if (chatBounds == null || !chatBounds.contains(mousePoint))
 		{
 			stopTyping(!config.preserveChatInput());
 		}
