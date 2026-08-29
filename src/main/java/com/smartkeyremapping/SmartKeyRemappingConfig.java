@@ -22,8 +22,8 @@ public interface SmartKeyRemappingConfig extends Config
 
     @ConfigItem(
             keyName = "preserveChatInput",
-            name = "Keep Typed Message on Click",
-            description = "Keep the currently typed message when clicking outside the chatbox",
+            name = "Save Typed Message",
+            description = "Save the currently typed message when clicking outside the chatbox",
             section = chatSection,
             position = 0
     )
@@ -34,8 +34,8 @@ public interface SmartKeyRemappingConfig extends Config
 
     @ConfigItem(
             keyName = "clickToFocus",
-            name = "Click to Type",
-            description = "Enter typing mode by clicking the chat input",
+            name = "Click Input Box to Type",
+            description = "Begin typing in chat by clicking the chat input box",
             section = chatSection,
             position = 1
     )
@@ -46,8 +46,8 @@ public interface SmartKeyRemappingConfig extends Config
 
     @ConfigItem(
             keyName = "stayFocusedAfterSend",
-            name = "Stay Typing After Sending",
-            description = "Remain in typing mode after sending a chat message",
+            name = "Continue Typing After Sending",
+            description = "After sending a chat message you're still typing",
             section = chatSection,
             position = 2
     )
@@ -59,7 +59,7 @@ public interface SmartKeyRemappingConfig extends Config
     @ConfigItem(
             keyName = "showNotTypingStatus",
             name = "Show Status When Not Typing",
-            description = "Replace the typed message with status text while you're not typing",
+            description = "Put Status text in the chatbox while you're not typing",
             section = chatSection,
             position = 3
     )
@@ -70,8 +70,8 @@ public interface SmartKeyRemappingConfig extends Config
 
     @ConfigItem(
             keyName = "draftPeekKey",
-            name = "Typed Message Peek Key",
-            description = "Hold this key while unfocused to reveal the preserved typed message",
+            name = "Message Peek Key",
+            description = "Hold this key while not typing to reveal the saved typed message",
             section = chatSection,
             position = 4
     )
@@ -89,8 +89,8 @@ public interface SmartKeyRemappingConfig extends Config
 
     @ConfigItem(
             keyName = "notTypingText",
-            name = "Not Typing Status Text",
-            description = "Text shown in the chat input while typing is unfocused",
+            name = "Status Text",
+            description = "Text shown in the chat input while not typing",
             section = visualSection,
             position = 0
     )
@@ -127,7 +127,7 @@ public interface SmartKeyRemappingConfig extends Config
     @ConfigItem(
             keyName = "hoverFillColor",
             name = "Hover Fill Color",
-            description = "Background fill color when hovering over the input line",
+            description = "Background fill color when hovering over the input box",
             section = visualSection,
             position = 3
     )
@@ -140,7 +140,7 @@ public interface SmartKeyRemappingConfig extends Config
     @ConfigItem(
             keyName = "hoverOutlineColor",
             name = "Hover Outline Color",
-            description = "Border outline color when hovering over the input line",
+            description = "Border outline color when hovering over the input box",
             section = visualSection,
             position = 4
     )
